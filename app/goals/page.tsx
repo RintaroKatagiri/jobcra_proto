@@ -4,30 +4,12 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import ActionCard from '@/app/components/ActionCard';
 import Toast from '@/app/components/Toast';
-import { actionsCompany } from '@/app/constants/actionsCompany';
 import { companyValues } from '@/app/constants/companyValues';
-import { generatePersonalActions, PersonalAction } from '@/app/constants/actionsPersonal';
+import { generateIntegratedActions, IntegratedAction } from '@/app/constants/actionsIntegrated';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 
-type CompanyAction = {
-  id: string;
-  title: string;
-  description: string;
-  rationale: string;
-  company_value: string;
-};
-
-type Action = PersonalAction | CompanyAction;
-
-function isPersonalAction(action: Action): action is PersonalAction {
-  return 'personal_value' in action;
-}
-
-function isCompanyAction(action: Action): action is CompanyAction {
-  return 'company_value' in action;
-}
 
 export default function GoalsPage() {
   const router = useRouter();
@@ -38,8 +20,7 @@ export default function GoalsPage() {
   const [showActions, setShowActions] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [personalValues, setPersonalValues] = useState<string[]>([]);
-  const [personalActions, setPersonalActions] = useState<PersonalAction[]>([]);
-  const [companyActions, setCompanyActions] = useState<CompanyAction[]>([]);
+  const [integratedActions, setIntegratedActions] = useState<IntegratedAction[]>([]);
   const [selectedActions, setSelectedActions] = useState<string[]>([]);
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
@@ -66,17 +47,8 @@ export default function GoalsPage() {
 
     await new Promise(resolve => setTimeout(resolve, 2000));
 
-    const generatedPersonalActions = generatePersonalActions(personalValues);
-    setPersonalActions(generatedPersonalActions);
-
-    const generatedCompanyActions: CompanyAction[] = actionsCompany.map(action => ({
-      id: action.id,
-      title: action.title,
-      description: action.description,
-      rationale: action.rationale,
-      company_value: action.valueMapping.company[0] || '企業理念'
-    }));
-    setCompanyActions(generatedCompanyActions);
+    const generatedActions = generateIntegratedActions(personalValues, companyValues);
+    setIntegratedActions(generatedActions);
 
     setSelectedActions([]);
 
@@ -109,8 +81,7 @@ export default function GoalsPage() {
 
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    const allActions = [...personalActions, ...companyActions];
-    const selectedActionsData = allActions.filter(a => selectedActions.includes(a.id));
+    const selectedActionsData = integratedActions.filter(a => selectedActions.includes(a.id));
     localStorage.setItem('registered-personal-actions', JSON.stringify(selectedActionsData));
 
     // Save goal information
@@ -255,14 +226,17 @@ export default function GoalsPage() {
           </div>
         )}
 
-        {showActions && !isLoading && (personalActions.length > 0 || companyActions.length > 0) && (
+        {showActions && !isLoading && integratedActions.length > 0 && (
           <div className="space-y-6 animate-in fade-in duration-500">
             <div className="bg-white rounded-2xl shadow p-6 space-y-4">
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-xl font-bold text-gray-900">ステップ2: 提案アクション</h2>
                   <p className="text-sm text-gray-600 mt-1">
-                    企業理念とあなたの価値観に基づくアクションが生成されました。
+                    企業理念とあなたの価値観を組み合わせたアクションが生成されました。
+                  </p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    各アクションには企業理念と個人の価値観の重み付けが設定されています。
                   </p>
                   <p className="text-sm font-medium text-blue-600 mt-1">
                     この中から5つを選択して登録してください ({selectedActions.length}/5)
@@ -285,90 +259,52 @@ export default function GoalsPage() {
               </div>
             </div>
 
-            {companyActions.length > 0 && (
-              <div className="space-y-4">
-                <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
-                  <h3 className="text-lg font-bold text-blue-900 mb-2">企業理念に基づくアクション</h3>
-                  <p className="text-sm text-blue-700">
-                    以下は、企業の価値観 ({companyValues.join('、')}) に基づくアクションです。
-                  </p>
-                </div>
-                {companyActions.map((action) => (
-                  <div
-                    key={action.id}
-                    className={`bg-white rounded-2xl shadow p-6 space-y-3 transition-all ${
-                      selectedActions.includes(action.id)
-                        ? 'ring-2 ring-blue-500 bg-blue-50'
-                        : 'hover:shadow-lg'
-                    }`}
-                  >
-                    <div className="flex items-start gap-4">
-                      <Checkbox
-                        checked={selectedActions.includes(action.id)}
-                        onCheckedChange={() => handleToggleAction(action.id)}
-                        className="mt-1"
-                      />
-                      <div className="flex-1 space-y-2">
-                        <h3 className="font-bold text-gray-900">{action.title}</h3>
-                        <p className="text-sm text-gray-700">{action.description}</p>
-                        <div className="flex items-center gap-2 text-xs">
-                          <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full font-medium">
-                            {action.company_value}
-                          </span>
-                          <span className="text-gray-500">{action.rationale}</span>
-                        </div>
+            <div className="space-y-4">
+              {integratedActions.map((action) => (
+                <div
+                  key={action.id}
+                  className={`bg-white rounded-2xl shadow p-6 space-y-3 transition-all ${
+                    selectedActions.includes(action.id)
+                      ? 'ring-2 ring-blue-500 bg-blue-50'
+                      : 'hover:shadow-lg'
+                  }`}
+                >
+                  <div className="flex items-start gap-4">
+                    <Checkbox
+                      checked={selectedActions.includes(action.id)}
+                      onCheckedChange={() => handleToggleAction(action.id)}
+                      className="mt-1"
+                    />
+                    <div className="flex-1 space-y-2">
+                      <h3 className="font-bold text-gray-900">{action.title}</h3>
+                      <p className="text-sm text-gray-700">{action.description}</p>
+                      <div className="flex flex-wrap items-center gap-2 text-xs">
+                        <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full font-medium">
+                          {action.company_value}
+                        </span>
+                        <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full font-medium">
+                          {action.personal_value}
+                        </span>
+                        <span className="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs">
+                          理念{action.company_weight}% / 価値観{action.personal_weight}%
+                        </span>
                       </div>
+                      <p className="text-xs text-gray-500 mt-1">{action.rationale}</p>
                     </div>
                   </div>
-                ))}
-              </div>
-            )}
-
-            {personalActions.length > 0 && (
-              <div className="space-y-4">
-                <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4">
-                  <h3 className="text-lg font-bold text-green-900 mb-2">あなたの価値観に基づくアクション</h3>
-                  <p className="text-sm text-green-700">
-                    以下は、あなたの価値観トップ5に基づいて生成されたアクションです。
-                  </p>
                 </div>
-                {personalActions.map((action) => (
-                  <div
-                    key={action.id}
-                    className={`bg-white rounded-2xl shadow p-6 space-y-3 transition-all ${
-                      selectedActions.includes(action.id)
-                        ? 'ring-2 ring-blue-500 bg-blue-50'
-                        : 'hover:shadow-lg'
-                    }`}
-                  >
-                    <div className="flex items-start gap-4">
-                      <Checkbox
-                        checked={selectedActions.includes(action.id)}
-                        onCheckedChange={() => handleToggleAction(action.id)}
-                        className="mt-1"
-                      />
-                      <div className="flex-1 space-y-2">
-                        <h3 className="font-bold text-gray-900">{action.title}</h3>
-                        <p className="text-sm text-gray-700">{action.description}</p>
-                        <div className="flex items-center gap-2 text-xs">
-                          <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full font-medium">
-                            {action.personal_value}
-                          </span>
-                          <span className="text-gray-500">{action.rationale}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+              ))}
+            </div>
           </div>
         )}
 
-        {showActions && (personalActions.length > 0 || companyActions.length > 0) && (
+        {showActions && integratedActions.length > 0 && (
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <p className="text-sm text-blue-800 font-medium">
-              💡 企業理念とあなたの価値観の両方に基づいてアクションを生成しました。
+              💡 企業理念とあなたの価値観を組み合わせた統合的なアクションを生成しました。
+            </p>
+            <p className="text-xs text-blue-700 mt-2">
+              各アクションには、企業理念と個人の価値観の重み付けが設定されています。実践度に応じて、重み付けの異なるアクションを提案できます。
             </p>
             <p className="text-xs text-blue-700 mt-2">
               ※登録したアクションはホーム画面に反映され、日々の実践に活用できます。

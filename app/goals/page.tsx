@@ -32,6 +32,7 @@ function isCompanyAction(action: Action): action is CompanyAction {
 export default function GoalsPage() {
   const router = useRouter();
   const [toast, setToast] = useState<string | null>(null);
+  const [expectedRole, setExpectedRole] = useState<string>('');
   const [goalText, setGoalText] = useState<string>('');
   const [goalDays, setGoalDays] = useState<number>(30);
   const [showActions, setShowActions] = useState<boolean>(false);
@@ -114,6 +115,7 @@ export default function GoalsPage() {
 
     // Save goal information
     const goalData = {
+      expectedRole: expectedRole,
       title: goalText,
       startDate: new Date().toISOString().split('T')[0],
       durationDays: goalDays
@@ -144,8 +146,23 @@ export default function GoalsPage() {
 
           <div className="space-y-4">
             <div className="space-y-4">
+              <h3 className="text-base font-bold text-gray-900 mb-2">ステップ1: 目標を入力</h3>
               <div>
-                <h3 className="text-base font-bold text-gray-900 mb-2">ステップ1: 目標を入力</h3>
+                <label className="text-sm font-medium text-gray-700 block mb-2">
+                  期待役割
+                </label>
+                <Textarea
+                  value={expectedRole}
+                  onChange={(e) => setExpectedRole(e.target.value)}
+                  placeholder="例: 営業チームのリーダーとして、チームメンバーの成長をサポートしながら売上目標を達成する"
+                  rows={3}
+                  className="w-full"
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-700 block mb-2">
+                  目標
+                </label>
                 <Textarea
                   value={goalText}
                   onChange={(e) => setGoalText(e.target.value)}

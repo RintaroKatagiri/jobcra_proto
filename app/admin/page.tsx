@@ -7,10 +7,6 @@ import { Button } from '@/components/ui/button';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Settings } from 'lucide-react';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
 
 interface User {
   id: string;
@@ -49,12 +45,25 @@ export default function AdminPage() {
   const [selectedMonth, setSelectedMonth] = useState('2025-10');
   const [employeeData, setEmployeeData] = useState<EmployeeData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [supabase, setSupabase] = useState<any>(null);
 
   useEffect(() => {
-    fetchData();
-  }, [selectedMonth]);
+    const supabaseUrl = 'https://0ec90b57d6e95fcbda19832f.supabase.co';
+    const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJib2x0IiwicmVmIjoiMGVjOTBiNTdkNmU5NWZjYmRhMTk4MzJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODE1NzQsImV4cCI6MTc1ODg4MTU3NH0.9I8-U0x86Ak8t2DGaIk0HfvTSLsAyzdnz-Nw00mMkKw';
+
+    const client = createClient(supabaseUrl, supabaseAnonKey);
+    setSupabase(client);
+  }, []);
+
+  useEffect(() => {
+    if (supabase) {
+      fetchData();
+    }
+  }, [selectedMonth, supabase]);
 
   const fetchData = async () => {
+    if (!supabase) return;
+
     setLoading(true);
 
     const startDate = `${selectedMonth}-01`;
@@ -72,7 +81,7 @@ export default function AdminPage() {
       return;
     }
 
-    const employeeDataPromises = users.map(async (user) => {
+    const employeeDataPromises = users.map(async (user: User) => {
       const { data: goals } = await supabase
         .from('goals')
         .select('*')
@@ -85,7 +94,7 @@ export default function AdminPage() {
       }
 
       const goalsWithActions = await Promise.all(
-        goals.map(async (goal) => {
+        goals.map(async (goal: Goal) => {
           const { data: actions } = await supabase
             .from('actions')
             .select('*')
@@ -96,7 +105,7 @@ export default function AdminPage() {
           }
 
           const actionsWithLogs = await Promise.all(
-            actions.map(async (action) => {
+            actions.map(async (action: Action) => {
               const { data: logs } = await supabase
                 .from('action_logs')
                 .select('*')

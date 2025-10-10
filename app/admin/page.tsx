@@ -48,8 +48,8 @@ export default function AdminPage() {
   const [supabase, setSupabase] = useState<any>(null);
 
   useEffect(() => {
-    const supabaseUrl = 'https://0ec90b57d6e95fcbda19832f.supabase.co';
-    const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJib2x0IiwicmVmIjoiMGVjOTBiNTdkNmU5NWZjYmRhMTk4MzJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODE1NzQsImV4cCI6MTc1ODg4MTU3NH0.9I8-U0x86Ak8t2DGaIk0HfvTSLsAyzdnz-Nw00mMkKw';
+    const supabaseUrl = 'https://oyquiiqqzlsbwdutggmj.supabase.co';
+    const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95cXVpaXFxemxzYndkdXRnZ21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAwNjcxMTUsImV4cCI6MjA3NTY0MzExNX0.qxQvihhbSSmCagOScAYZrIRhUFtXtDUij32Hy6ylLmM';
 
     const client = createClient(supabaseUrl, supabaseAnonKey);
     setSupabase(client);

@@ -8,11 +8,6 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Plus, Pencil, Trash2, Save, X } from 'lucide-react';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
-
 interface CompanyValue {
   id: string;
   name: string;
@@ -26,12 +21,25 @@ export default function CompanyValuesPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isAdding, setIsAdding] = useState(false);
   const [editForm, setEditForm] = useState({ name: '', description: '' });
+  const [supabase, setSupabase] = useState<any>(null);
 
   useEffect(() => {
-    fetchValues();
+    const supabaseUrl = 'https://oyquiiqqzlsbwdutggmj.supabase.co';
+    const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95cXVpaXFxemxzYndkdXRnZ21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAwNjcxMTUsImV4cCI6MjA3NTY0MzExNX0.qxQvihhbSSmCagOScAYZrIRhUFtXtDUij32Hy6ylLmM';
+
+    const client = createClient(supabaseUrl, supabaseAnonKey);
+    setSupabase(client);
   }, []);
 
+  useEffect(() => {
+    if (supabase) {
+      fetchValues();
+    }
+  }, [supabase]);
+
   const fetchValues = async () => {
+    if (!supabase) return;
+
     setLoading(true);
     const { data } = await supabase
       .from('company_values')
@@ -61,6 +69,8 @@ export default function CompanyValuesPage() {
   };
 
   const handleSave = async () => {
+    if (!supabase) return;
+
     if (!editForm.name.trim()) {
       alert('企業理念の名前を入力してください');
       return;
@@ -101,6 +111,8 @@ export default function CompanyValuesPage() {
   };
 
   const handleDelete = async (id: string) => {
+    if (!supabase) return;
+
     if (!confirm('この企業理念を削除してもよろしいですか？')) {
       return;
     }

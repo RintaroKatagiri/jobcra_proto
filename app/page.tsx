@@ -176,6 +176,21 @@ export default function Home() {
                     <div className="flex-1">
                       <h4 className="font-medium text-gray-900 text-sm">{action.title}</h4>
                       <p className="text-xs text-gray-600 mt-1">{action.description}</p>
+                      {action.company_value && action.personal_value && (
+                        <div className="flex flex-wrap items-center gap-1.5 mt-2">
+                          <span className="px-2 py-0.5 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
+                            {action.company_value}
+                          </span>
+                          <span className="px-2 py-0.5 bg-green-100 text-green-800 rounded-full text-xs font-medium">
+                            {action.personal_value}
+                          </span>
+                          {action.company_weight && action.personal_weight && (
+                            <span className="px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full text-xs">
+                              理念{action.company_weight}% / 価値観{action.personal_weight}%
+                            </span>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -204,6 +219,21 @@ export default function Home() {
                         <div className="flex-1">
                           <h4 className="font-medium text-gray-900 text-sm">{log.action.title}</h4>
                           <p className="text-xs text-gray-600 mt-1">{log.action.description}</p>
+                          {log.action.company_value && log.action.personal_value && (
+                            <div className="flex flex-wrap items-center gap-1.5 mt-2">
+                              <span className="px-2 py-0.5 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
+                                {log.action.company_value}
+                              </span>
+                              <span className="px-2 py-0.5 bg-green-100 text-green-800 rounded-full text-xs font-medium">
+                                {log.action.personal_value}
+                              </span>
+                              {log.action.company_weight && log.action.personal_weight && (
+                                <span className="px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full text-xs">
+                                  理念{log.action.company_weight}% / 価値観{log.action.personal_weight}%
+                                </span>
+                              )}
+                            </div>
+                          )}
                         </div>
                         <span className="text-xs text-gray-500 whitespace-nowrap">{log.time}</span>
                       </div>

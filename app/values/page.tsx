@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import Toast from '@/app/components/Toast';
 import { companyValues } from '@/app/constants/companyValues';
 
-
 export default function ValuesPage() {
   const router = useRouter();
   const [toast, setToast] = useState<string | null>(null);
@@ -48,18 +47,16 @@ export default function ValuesPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl shadow p-6 space-y-4">
-          <div className="flex justify-between items-center">
-            <h2 className="text-xl font-bold text-gray-900">あなたの価値観</h2>
-            {hasDiagnosisResult && (
+        {hasDiagnosisResult && (
+          <div className="bg-white rounded-2xl shadow p-6 space-y-4">
+            <div className="flex justify-between items-center">
+              <h2 className="text-xl font-bold text-gray-900">あなたの価値観</h2>
               <span className="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
                 ✓ 診断完了
               </span>
-            )}
-          </div>
+            </div>
 
-          <div className="space-y-4">
-            {hasDiagnosisResult ? (
+            <div className="space-y-4">
               <div>
                 <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4 mb-4">
                   <p className="text-sm text-green-800 font-medium mb-2">
@@ -86,29 +83,29 @@ export default function ValuesPage() {
                   診断をやり直す
                 </button>
               </div>
-            ) : (
-              <div>
-                <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4 mb-4">
-                  <p className="text-sm text-blue-800 font-medium mb-2">
-                    💡 価値観診断を受けましょう
-                  </p>
-                  <p className="text-sm text-blue-700">
-                    48個の価値観から、あなたが最も大切にする価値観トップ5を明らかにします。
-                  </p>
-                </div>
-                <p className="text-sm text-gray-600 mb-4">
-                  診断結果は、あなたに最適なアクションを生成する際に使用されます。
-                </p>
-                <button
-                  onClick={() => router.push('/values/maxdiff')}
-                  className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700"
-                >
-                  価値観診断を受ける
-                </button>
-              </div>
-            )}
+            </div>
           </div>
-        </div>
+        )}
+
+        {!hasDiagnosisResult && (
+          <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
+            <p className="text-sm text-blue-800 font-medium mb-2">
+              💡 価値観診断を受けましょう
+            </p>
+            <p className="text-sm text-blue-700 mb-3">
+              48個の価値観から、あなたが最も大切にする価値観トップ5を明らかにします。
+            </p>
+            <p className="text-sm text-blue-700 mb-4">
+              診断結果は、あなたに最適なアクションを生成する際に使用されます。
+            </p>
+            <button
+              onClick={() => router.push('/values/maxdiff')}
+              className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700"
+            >
+              価値観診断を受ける
+            </button>
+          </div>
+        )}
 
         {hasDiagnosisResult && (
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">

@@ -75,21 +75,16 @@ export default function MaxDiffPage() {
       setCurrentPage(currentPage + 1);
       setSelections({});
     } else {
-      const sorted = Object.entries(newScores)
-        .sort(([, a], [, b]) => b - a)
-        .slice(0, 5)
-        .map(([value]) => value);
-
-      localStorage.setItem("maxdiff-top5", JSON.stringify(sorted));
+      // 診断結果をlocalStorageに保存しない（デモ機能）
       setIsComplete(true);
     }
   };
 
   const handleApplyToHome = () => {
-    setToast("ホーム画面に反映しました（デモ表示のみ）");
+    setToast("診断結果は保存されません。デフォルト値が維持されます。");
     setTimeout(() => {
       router.push("/");
-    }, 1000);
+    }, 1500);
   };
 
   const getBestCount = () =>

@@ -13,6 +13,37 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 
+// goals.csvからデータを読み込む関数
+const loadGoalsFromCSV = async (): Promise<{
+  expectedRole: string;
+  goal: string;
+} | null> => {
+  try {
+    const response = await fetch("/goals.csv");
+    const csvText = await response.text();
+
+    // CSVの行に分割（ヘッダー行をスキップ）
+    const lines = csvText.split("\n").filter((line) => line.trim() !== "");
+    const dataLines = lines.slice(1); // ヘッダー行をスキップ
+
+    if (dataLines.length > 0) {
+      // 最初のデータ行を使用
+      const columns = dataLines[0].split(",").map((col) => col.trim());
+      if (columns.length >= 2) {
+        return {
+          expectedRole: columns[0],
+          goal: columns[1],
+        };
+      }
+    }
+
+    return null;
+  } catch (error) {
+    console.error("goals.csvの読み込みに失敗しました:", error);
+    return null;
+  }
+};
+
 export default function GoalsPage() {
   const router = useRouter();
   const [toast, setToast] = useState<string | null>(null);
@@ -21,6 +52,7 @@ export default function GoalsPage() {
   const [goalDays, setGoalDays] = useState<number>(30);
   const [showActions, setShowActions] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingGoals, setIsLoadingGoals] = useState<boolean>(true);
   const [personalValues, setPersonalValues] = useState<string[]>([]);
   const [integratedActions, setIntegratedActions] = useState<
     IntegratedAction[]
@@ -33,6 +65,23 @@ export default function GoalsPage() {
     if (stored) {
       setPersonalValues(JSON.parse(stored));
     }
+  }, []);
+
+  // goals.csvからデータを読み込み
+  useEffect(() => {
+    const loadGoalsData = async () => {
+      setIsLoadingGoals(true);
+      const goalsData = await loadGoalsFromCSV();
+
+      if (goalsData) {
+        setExpectedRole(goalsData.expectedRole);
+        setGoalText(goalsData.goal);
+      }
+
+      setIsLoadingGoals(false);
+    };
+
+    loadGoalsData();
   }, []);
 
   const handleGenerateActions = async () => {
@@ -51,7 +100,8 @@ export default function GoalsPage() {
 
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    const generatedActions = generateIntegratedActions(
+    // CSVファイルから動的にアクションを生成
+    const generatedActions = await generateIntegratedActions(
       personalValues,
       companyValues
     );

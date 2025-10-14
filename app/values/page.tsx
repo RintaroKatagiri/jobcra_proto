@@ -39,13 +39,7 @@ export default function ValuesPage() {
   }, []);
 
   const handleDiagnosisClick = () => {
-    setToast(
-      "価値観診断はデモ機能として実行できますが、結果は反映されません。現在のデフォルト値が維持されます。"
-    );
-    // 少し遅れてから診断ページに遷移
-    setTimeout(() => {
-      router.push("/values/maxdiff");
-    }, 2000);
+    router.push("/values/maxdiff");
   };
 
   return (
@@ -85,7 +79,7 @@ export default function ValuesPage() {
             <div>
               <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4 mb-4">
                 <p className="text-sm text-green-800 font-medium mb-2">
-                  ✓ 価値観が設定されています（デフォルト値）
+                  ✓ 価値観が設定されています
                 </p>
                 <p className="text-sm text-green-700">
                   以下は、あなたが最も大切にする価値観トップ5です。
@@ -101,17 +95,11 @@ export default function ValuesPage() {
                   </div>
                 ))}
               </div>
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-3">
-                <p className="text-sm text-yellow-800">
-                  💡
-                  価値観診断はデモ機能として実行できますが、結果は反映されません
-                </p>
-              </div>
               <button
                 onClick={handleDiagnosisClick}
                 className="px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200"
               >
-                価値観診断を体験する（デモ）
+                価値観診断
               </button>
             </div>
           </div>

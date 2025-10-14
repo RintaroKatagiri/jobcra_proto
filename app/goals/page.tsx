@@ -188,25 +188,41 @@ export default function GoalsPage() {
                 <label className="text-sm font-medium text-gray-700 block mb-2">
                   期待役割
                 </label>
-                <Textarea
-                  value={expectedRole}
-                  onChange={(e) => setExpectedRole(e.target.value)}
-                  placeholder="例: 品質と納期を両立させる現場リーダー"
-                  rows={3}
-                  className="w-full"
-                />
+                {isLoadingGoals ? (
+                  <div className="w-full h-20 border border-gray-300 rounded-lg flex items-center justify-center bg-gray-50">
+                    <div className="flex items-center gap-2 text-gray-500">
+                      <div className="w-4 h-4 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin" />
+                      <span className="text-sm">読み込み中...</span>
+                    </div>
+                  </div>
+                ) : (
+                  <Textarea
+                    value={expectedRole}
+                    onChange={(e) => setExpectedRole(e.target.value)}
+                    rows={3}
+                    className="w-full"
+                  />
+                )}
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 block mb-2">
                   目標
                 </label>
-                <Textarea
-                  value={goalText}
-                  onChange={(e) => setGoalText(e.target.value)}
-                  placeholder="例: 今期（3か月）で不良率を30%低減し、納期遵守率98%を達成する"
-                  rows={4}
-                  className="w-full"
-                />
+                {isLoadingGoals ? (
+                  <div className="w-full h-24 border border-gray-300 rounded-lg flex items-center justify-center bg-gray-50">
+                    <div className="flex items-center gap-2 text-gray-500">
+                      <div className="w-4 h-4 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin" />
+                      <span className="text-sm">読み込み中...</span>
+                    </div>
+                  </div>
+                ) : (
+                  <Textarea
+                    value={goalText}
+                    onChange={(e) => setGoalText(e.target.value)}
+                    rows={4}
+                    className="w-full"
+                  />
+                )}
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 block mb-2">

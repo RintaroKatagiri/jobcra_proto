@@ -80,15 +80,15 @@ export default function MaxDiffPage() {
         .slice(0, 5)
         .map(([value]) => value);
 
-      localStorage.setItem('maxdiff-top5', JSON.stringify(sorted));
+      localStorage.setItem("maxdiff-top5", JSON.stringify(sorted));
       setIsComplete(true);
     }
   };
 
   const handleApplyToHome = () => {
-    setToast('ホーム画面に反映しました');
+    setToast("ホーム画面に反映しました");
     setTimeout(() => {
-      router.push('/');
+      router.push("/");
     }, 1000);
   };
 
@@ -144,9 +144,7 @@ export default function MaxDiffPage() {
             </div>
           </div>
 
-          <p className="text-xs text-gray-500 text-center">
-            
-          </p>
+          <p className="text-xs text-gray-500 text-center"></p>
         </div>
 
         {toast && <Toast message={toast} onClose={() => setToast(null)} />}
@@ -260,9 +258,7 @@ export default function MaxDiffPage() {
           </button>
         </div>
 
-        <p className="text-xs text-gray-500 text-center">
-          
-        </p>
+        <p className="text-xs text-gray-500 text-center"></p>
       </div>
 
       {toast && <Toast message={toast} onClose={() => setToast(null)} />}

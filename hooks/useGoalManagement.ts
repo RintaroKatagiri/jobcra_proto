@@ -54,10 +54,10 @@ export const useGoalManagement = () => {
       return;
     }
 
-    if (personalValues.length === 0) {
-      setToast("価値観診断を先に完了してください");
-      return;
-    }
+    // if (personalValues.length === 0) {
+    //   setToast("価値観診断を先に完了してください");
+    //   return;
+    // }
 
     setIsLoading(true);
     setShowActions(false);

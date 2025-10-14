@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Toast from '@/app/components/Toast';
-import { companyValues } from '@/app/constants/companyValues';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Toast from "@/app/components/Toast";
+import { companyValues } from "@/app/constants/companyValues";
 
 export default function ValuesPage() {
   const router = useRouter();
@@ -12,7 +12,7 @@ export default function ValuesPage() {
   const [hasDiagnosisResult, setHasDiagnosisResult] = useState<boolean>(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem('maxdiff-top5');
+    const stored = localStorage.getItem("maxdiff-top5");
     if (stored) {
       const values = JSON.parse(stored);
       setPersonalValues(values);
@@ -25,9 +25,7 @@ export default function ValuesPage() {
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="bg-white rounded-2xl shadow p-6 space-y-4">
           <h1 className="text-2xl font-bold text-gray-900">価値観</h1>
-          <p className="text-gray-600">
-            企業理念と価値観を確認できます。
-          </p>
+          <p className="text-gray-600">企業理念と価値観を確認できます。</p>
         </div>
 
         <div className="bg-white rounded-2xl shadow p-6 space-y-4">
@@ -50,7 +48,9 @@ export default function ValuesPage() {
         {hasDiagnosisResult && (
           <div className="bg-white rounded-2xl shadow p-6 space-y-4">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-bold text-gray-900">あなたの価値観</h2>
+              <h2 className="text-xl font-bold text-gray-900">
+                あなたの価値観
+              </h2>
               <span className="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
                 ✓ 診断完了
               </span>
@@ -77,7 +77,7 @@ export default function ValuesPage() {
                   ))}
                 </div>
                 <button
-                  onClick={() => router.push('/values/maxdiff')}
+                  onClick={() => router.push("/values/maxdiff")}
                   className="px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200"
                 >
                   診断をやり直す
@@ -99,7 +99,7 @@ export default function ValuesPage() {
               診断結果は、あなたに最適なアクションを生成する際に使用されます。
             </p>
             <button
-              onClick={() => router.push('/values/maxdiff')}
+              onClick={() => router.push("/values/maxdiff")}
               className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700"
             >
               価値観診断を受ける
@@ -110,7 +110,8 @@ export default function ValuesPage() {
         {hasDiagnosisResult && (
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <p className="text-sm text-blue-800">
-              💡 この価値観診断結果は、目標・アクションページでアクションを生成する際に自動的に使用されます。
+              💡
+              この価値観診断結果は、目標・アクションページでアクションを生成する際に自動的に使用されます。
             </p>
           </div>
         )}

@@ -91,16 +91,22 @@ export default function Home() {
   };
 
   const handleReset = () => {
-    if (confirm("目標とアクションをすべて削除して、再設定しますか？")) {
+    if (
+      confirm(
+        "目標とアクション、価値観診断結果をすべて削除して、再設定しますか？"
+      )
+    ) {
       localStorage.removeItem("registered-personal-actions");
       localStorage.removeItem("user-goal");
+      localStorage.removeItem("maxdiff-top5");
       setRegisteredPersonalActions([]);
       setUserGoal(null);
+      setMaxDiffTop5(null);
       setSelectedActionIds([]);
       setTodayLogs([]);
       setActionMode("company");
       setToast(
-        "目標・アクションをリセットしました。目標・アクションページで再設定してください。"
+        "目標・アクション・価値観診断結果をリセットしました。価値観診断から再開してください。"
       );
     }
   };

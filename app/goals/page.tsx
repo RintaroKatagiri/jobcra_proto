@@ -19,27 +19,46 @@ const loadGoalsFromCSV = async (): Promise<{
   goal: string;
 } | null> => {
   try {
-    const response = await fetch("/goals.csv");
+    console.log('CSVファイルの読み込みを開始...');
+    const response = await fetch('/goals.csv');
+    
+    if (!response.ok) {
+      console.error('CSV読み込みエラー:', response.status, response.statusText);
+      return null;
+    }
+    
     const csvText = await response.text();
+    console.log('取得したCSVテキスト:', csvText);
 
     // CSVの行に分割（ヘッダー行をスキップ）
-    const lines = csvText.split("\n").filter((line) => line.trim() !== "");
-    const dataLines = lines.slice(1); // ヘッダー行をスキップ
-
-    if (dataLines.length > 0) {
-      // 最初のデータ行を使用
-      const columns = dataLines[0].split(",").map((col) => col.trim());
-      if (columns.length >= 2) {
-        return {
-          expectedRole: columns[0],
-          goal: columns[1],
-        };
-      }
+    const lines = csvText.split('\n').filter((line) => line.trim() !== '');
+    console.log('分割された行:', lines);
+    
+    if (lines.length < 2) {
+      console.error('CSVにデータが不足しています');
+      return null;
+    }
+    
+    // 最初のデータ行（ヘッダーをスキップ）
+    const dataLine = lines[1];
+    console.log('データ行:', dataLine);
+    
+    // CSVの解析（カンマで分割）
+    const columns = dataLine.split(',');
+    console.log('分割された列:', columns);
+    
+    if (columns.length >= 2) {
+      const result = {
+        expectedRole: columns[0].trim(),
+        goal: columns[1].trim()
+      };
+      console.log('解析結果:', result);
+      return result;
     }
 
     return null;
   } catch (error) {
-    console.error("goals.csvの読み込みに失敗しました:", error);
+    console.error('goals.csvの読み込みに失敗しました:', error);
     return null;
   }
 };
@@ -412,7 +431,7 @@ export default function GoalsPage() {
         )}
 
         {!showActions && (
-          <p className="text-xs text-gray-500 text-center">
+          <p className="text-xs text-gray-500 text-center"></p>
             ※この画面の操作結果はデモ表示のみで、アプリのデータには反映されません。
           </p>
         )}

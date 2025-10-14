@@ -5,12 +5,16 @@ import { useRouter } from "next/navigation";
 import SegmentedToggle from "./components/SegmentedToggle";
 import ProgressBar from "./components/ProgressBar";
 import Toast from "./components/Toast";
-import { goal } from "./constants/goal";
-import { actionsCompany } from "./constants/actionsCompany";
-import { actionsPersonalDemo } from "./constants/actionsPersonalDemo";
 import { calculateProgress } from "./utils/dateUtils";
 
 type ActionMode = "company" | "personal";
+
+// フォールバック用のデフォルト目標
+const DEFAULT_GOAL = {
+  title: "目標を設定してください",
+  startDate: new Date().toISOString().split("T")[0],
+  durationDays: 30,
+};
 
 export default function Home() {
   const router = useRouter();
@@ -30,7 +34,7 @@ export default function Home() {
     durationDays: number;
   } | null>(null);
 
-  const currentGoal = userGoal || goal;
+  const currentGoal = userGoal || DEFAULT_GOAL;
   const { dayIndex, progressPct } = calculateProgress(
     currentGoal.startDate,
     currentGoal.durationDays
@@ -52,11 +56,6 @@ export default function Home() {
       setUserGoal(JSON.parse(storedGoal));
     }
   }, []);
-
-  const currentActions =
-    registeredPersonalActions.length > 0
-      ? registeredPersonalActions
-      : actionsCompany;
 
   const handleToggleAction = (actionId: string) => {
     setSelectedActionIds((prev) => {
@@ -81,7 +80,7 @@ export default function Home() {
     });
 
     const newLogs = selectedActionIds.map((actionId) => {
-      const action = currentActions.find((a) => a.id === actionId);
+      const action = registeredPersonalActions.find((a) => a.id === actionId);
       return { action, time: timeStr };
     });
 
@@ -190,7 +189,7 @@ export default function Home() {
               </div>
 
               <div className="space-y-2">
-                {currentActions.map((action) => (
+                {registeredPersonalActions.map((action) => (
                   <div
                     key={action.id}
                     className={`border rounded-lg p-3 cursor-pointer transition-all ${

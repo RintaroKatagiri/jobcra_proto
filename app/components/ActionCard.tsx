@@ -22,7 +22,7 @@ export default function ActionCard({ action, onToast }: ActionCardProps) {
   const [expanded, setExpanded] = useState(false);
 
   const handleAction = (actionType: string) => {
-    onToast(`${actionType}しました（デモ表示のみ）`);
+    onToast(`${actionType}しました`);
   };
 
   const allValues = [...action.valueMapping.company, ...action.valueMapping.personal];

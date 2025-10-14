@@ -431,9 +431,7 @@ export default function GoalsPage() {
         )}
 
         {!showActions && (
-          <p className="text-xs text-gray-500 text-center"></p>
-            ※この画面の操作結果はデモ表示のみで、アプリのデータには反映されません。
-          </p>
+          <div></div>
         )}
       </div>
 

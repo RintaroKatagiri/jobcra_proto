@@ -33,13 +33,7 @@ export default function PersonalActionsPage() {
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="bg-white rounded-2xl shadow p-6 space-y-4">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => router.push('/')}
-              className="text-gray-600 hover:text-gray-900"
-            >
-              ← 戻る
-            </button>
+          <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold text-gray-900">目標・アクション</h1>
           </div>
 
@@ -67,7 +61,7 @@ export default function PersonalActionsPage() {
           </div>
 
           <div>
-            <h3 className="text-lg font-bold text-gray-900 mb-3">価値観（デモ用固定）</h3>
+            <h3 className="text-lg font-bold text-gray-900 mb-3">価値観（固定）</h3>
             <div className="flex flex-wrap gap-2">
               {FIXED_PERSONAL_VALUES.map((value, idx) => (
                 <span
@@ -93,10 +87,6 @@ export default function PersonalActionsPage() {
             ))}
           </div>
         )}
-
-        <p className="text-xs text-gray-500 text-center">
-          ※この画面の操作結果はデモ表示のみで、アプリのデータには反映されません。
-        </p>
       </div>
 
       {toast && <Toast message={toast} onClose={() => setToast(null)} />}

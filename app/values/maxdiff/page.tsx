@@ -145,7 +145,7 @@ export default function MaxDiffPage() {
           </div>
 
           <p className="text-xs text-gray-500 text-center">
-            ※この画面の操作結果はデモ表示のみで、アプリのデータには反映されません。
+            
           </p>
         </div>
 
@@ -261,7 +261,7 @@ export default function MaxDiffPage() {
         </div>
 
         <p className="text-xs text-gray-500 text-center">
-          ※この画面の操作結果はデモ表示のみで、アプリのデータには反映されません。
+          
         </p>
       </div>
 

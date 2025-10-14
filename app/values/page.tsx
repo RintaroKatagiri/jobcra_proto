@@ -71,7 +71,7 @@ export default function ValuesPage() {
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-bold text-gray-900">あなたの価値観</h2>
             <span className="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
-              ✓ デフォルト設定済み
+              ✓ 設定済み
             </span>
           </div>
 

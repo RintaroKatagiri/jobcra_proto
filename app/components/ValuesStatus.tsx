@@ -36,26 +36,26 @@ export default function ValuesStatus({
     );
   }
 
-  return (
-    <div className="bg-yellow-50 border-2 border-yellow-300 rounded-lg p-5">
-      <div className="flex items-start gap-3">
-        <div className="text-2xl">⚠️</div>
-        <div className="flex-1">
-          <h3 className="font-bold text-yellow-900 mb-2">
-            価値観診断が必要です
-          </h3>
-          <p className="text-sm text-yellow-800 mb-3">
-            アクションを生成する前に、まず価値観診断を受けて、あなたの大切にする価値観トップ5を明確にしてください。
-          </p>
-          <Button
-            onClick={onNavigateToValuesDiagnosis}
-            variant="outline"
-            className="border-yellow-600 text-yellow-900 hover:bg-yellow-100"
-          >
-            価値観診断を受ける
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
+  // return (
+  //   <div className="bg-yellow-50 border-2 border-yellow-300 rounded-lg p-5">
+  //     <div className="flex items-start gap-3">
+  //       <div className="text-2xl">⚠️</div>
+  //       <div className="flex-1">
+  //         <h3 className="font-bold text-yellow-900 mb-2">
+  //           価値観診断が必要です
+  //         </h3>
+  //         <p className="text-sm text-yellow-800 mb-3">
+  //           アクションを生成する前に、まず価値観診断を受けて、あなたの大切にする価値観トップ5を明確にしてください。
+  //         </p>
+  //         <Button
+  //           onClick={onNavigateToValuesDiagnosis}
+  //           variant="outline"
+  //           className="border-yellow-600 text-yellow-900 hover:bg-yellow-100"
+  //         >
+  //           価値観診断を受ける
+  //         </Button>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
 }

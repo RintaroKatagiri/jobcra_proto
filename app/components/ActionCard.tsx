@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 interface Action {
   id: string;
   title: string;
   description: string;
-  rationale: string;
+  // rationale: string;
   valueMapping: {
     company: string[];
     personal: string[];
@@ -25,7 +25,10 @@ export default function ActionCard({ action, onToast }: ActionCardProps) {
     onToast(`${actionType}しました`);
   };
 
-  const allValues = [...action.valueMapping.company, ...action.valueMapping.personal];
+  const allValues = [
+    ...action.valueMapping.company,
+    ...action.valueMapping.personal,
+  ];
 
   return (
     <div className="bg-white rounded-2xl shadow p-5 space-y-3">
@@ -47,7 +50,7 @@ export default function ActionCard({ action, onToast }: ActionCardProps) {
         <div className="pt-2 border-t border-gray-200">
           <p className="text-sm text-gray-600">
             <strong>根拠：</strong>
-            {action.rationale}
+            {/* {action.rationale} */}
           </p>
         </div>
       )}
@@ -57,10 +60,10 @@ export default function ActionCard({ action, onToast }: ActionCardProps) {
           onClick={() => setExpanded(!expanded)}
           className="text-sm text-blue-600 hover:text-blue-700 font-medium"
         >
-          {expanded ? '詳細を閉じる' : '詳細を見る'}
+          {expanded ? "詳細を閉じる" : "詳細を見る"}
         </button>
         <button
-          onClick={() => handleAction('受け入れ')}
+          onClick={() => handleAction("受け入れ")}
           className="ml-auto px-4 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700"
         >
           受け入れ

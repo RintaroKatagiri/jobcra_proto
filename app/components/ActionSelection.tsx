@@ -104,7 +104,7 @@ function ActionCard({ action, isSelected, onToggle }: ActionCardProps) {
               理念{action.company_weight}% / 価値観{action.personal_weight}%
             </span>
           </div>
-          <p className="text-xs text-gray-500 mt-1">{action.rationale}</p>
+          {/* <p className="text-xs text-gray-500 mt-1">{action.rationale}</p> */}
         </div>
       </div>
     </div>

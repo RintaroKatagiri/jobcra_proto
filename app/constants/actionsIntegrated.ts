@@ -2,7 +2,7 @@ export interface IntegratedAction {
   id: string;
   title: string;
   description: string;
-  rationale: string;
+  // rationale: string;
   company_value: string;
   personal_value: string;
   company_weight: number;
@@ -34,7 +34,7 @@ const parseCSVLine = (line: string, index: number): IntegratedAction | null => {
     id: `csv-action-${index + 1}`,
     title,
     description,
-    rationale: `${companyValue}の実践が${personalValue}につながる`,
+    // rationale: `${companyValue}の実践が${personalValue}につながる`,
     company_value: companyValue,
     personal_value: personalValue,
     company_weight: companyWeight,
@@ -77,7 +77,7 @@ const getFallbackActions = (): IntegratedAction[] => {
       id: "csv-action-1",
       title: "誠実な現場対応で、トラブルを即時に可視化・対処する",
       description: "約束を守り、隠さず共有。期待を超える初動対応で信頼を得る",
-      rationale: "誠実な対応が人から感謝される行動につながる",
+      // rationale: "誠実な対応が人から感謝される行動につながる",
       company_value: "誠実",
       personal_value: "人から感謝される",
       company_weight: 80,
@@ -87,7 +87,7 @@ const getFallbackActions = (): IntegratedAction[] => {
       id: "csv-action-2",
       title: "協働で「1ライン1改善／週」を継続する",
       description: "全員がアイデアを出し合い、楽しく小さく早く改善",
-      rationale: "協働の実践を通じて仲間と楽しく仕事をする環境を作る",
+      // rationale: "協働の実践を通じて仲間と楽しく仕事をする環境を作る",
       company_value: "協働",
       personal_value: "仲間と楽しく仕事をする",
       company_weight: 60,
@@ -97,7 +97,7 @@ const getFallbackActions = (): IntegratedAction[] => {
       id: "csv-action-3",
       title: 'SPCと不良マップで"勘"を脱却する',
       description: "データで傾向把握し、重点箇所に先手を打つ",
-      rationale: "データ活用の専門性を高めることで価値を提供する",
+      // rationale: "データ活用の専門性を高めることで価値を提供する",
       company_value: "データ活用",
       personal_value: "高い専門性を持つ",
       company_weight: 55,
@@ -107,7 +107,7 @@ const getFallbackActions = (): IntegratedAction[] => {
       id: "csv-action-4",
       title: "試作・治具の小規模実験（Do）を毎月実行",
       description: "改善は創造。小さく試し、早く学ぶ",
-      rationale: "改善の実践を通じて創造的な仕事に取り組む",
+      // rationale: "改善の実践を通じて創造的な仕事に取り組む",
       company_value: "改善",
       personal_value: "創造的な仕事をする",
       company_weight: 50,
@@ -117,7 +117,7 @@ const getFallbackActions = (): IntegratedAction[] => {
       id: "csv-action-5",
       title: '後輩の標準作業定着を"現場コーチング"で支援',
       description: "責めずに支え、できるまで伴走",
-      rationale: "責任を持って後輩を支援し、慕われる関係を築く",
+      // rationale: "責任を持って後輩を支援し、慕われる関係を築く",
       company_value: "責任",
       personal_value: "後輩・部下から慕われ好かれる",
       company_weight: 70,
@@ -127,7 +127,7 @@ const getFallbackActions = (): IntegratedAction[] => {
       id: "csv-action-6",
       title: '他部署と"工程横断のボトルネック潰し"を実施',
       description: "品質×生産×購買が一体でネック解消",
-      rationale: "協働を通じて創造的な課題解決に取り組む",
+      // rationale: "協働を通じて創造的な課題解決に取り組む",
       company_value: "協働",
       personal_value: "創造的な仕事をする",
       company_weight: 40,
@@ -137,7 +137,7 @@ const getFallbackActions = (): IntegratedAction[] => {
       id: "csv-action-7",
       title: "顧客の声（VOC）を週次で取り込み、是正→予防へ",
       description: "感謝される改善を回す仕組み化",
-      rationale: "顧客志向の実践が人から感謝される結果につながる",
+      // rationale: "顧客志向の実践が人から感謝される結果につながる",
       company_value: "顧客志向",
       personal_value: "人から感謝される",
       company_weight: 70,
